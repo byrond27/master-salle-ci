@@ -11,27 +11,27 @@ pipeline {
       stage("Cleaning Package and Compile") {
          steps {
             echo "Cleaning Package"
-            sh script: "./mvnw clean package -DskipTests"
+            sh script: "mvn clean package -DskipTests"
             echo "Compile the package"
-            sh label:"", script: "./mvnw compile"
+            sh label:"", script: "mvn compile"
          }
       }
       stage ("Tests") {
           steps {
-            sh script: "./mvnw test"
+            sh script: "mvn test"
             junit "target/surefire-reports/*.xml"
           }
       }
       stage("Acceptance Test"){
          steps{
             echo "Executing Acceptance Test"
-            sh script: "./mvnw verify"
+            sh script: "mvn verify"
          }
       }
       stage("Package") {
          steps {
             echo "Package version ${new_version}"
-            sh script: "./mvnw package -DskipTests"
+            sh script: "mvn package -DskipTests"
          }
       }
      stage("Build Docker Image") {
