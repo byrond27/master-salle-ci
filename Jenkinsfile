@@ -11,7 +11,6 @@ pipeline {
       stage("Cleaning Package and Compile") {
          steps {
             echo "Cleaning Package"
-            sh 'docker rm $(docker ps --all --quiet) || true'
             sh script: "mvn clean package -DskipTests"
             echo "Compile the package"
             sh label:"", script: "mvn compile"
