@@ -11,6 +11,7 @@ pipeline {
       stage("Cleaning Package and Compile") {
          steps {
             echo "Cleaning Package"
+            sh 'docker rm $(docker ps --all --quiet) || true'
             sh script: "mvn clean package -DskipTests"
             echo "Compile the package"
             sh label:"", script: "mvn compile"
@@ -52,7 +53,7 @@ pipeline {
    }
    post {  
       always {  
-         mail bcc: "", body: "<b>Pipeline Finished</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: "", charset: "UTF-8", from: "", mimeType: "text/html", replyTo: "", subject: "Pipeline STARTED CI: Project name -> ${env.JOB_NAME}", to: "${notification_email}";  
+         mail bcc: "", body: "<b>Pipeline Finished</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: "", charset: "UTF-8", from: "", mimeType: "text/html", replyTo: "", subject: "Pipeline FINISHED CI: Project name -> ${env.JOB_NAME}", to: "${notification_email}";  
       }
       success {  
          mail bcc: "", body: "<b>Pipeline Success</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: "", charset: "UTF-8", from: "", mimeType: "text/html", replyTo: "", subject: "Pipeline SUCCESS CI: Project name -> ${env.JOB_NAME}", to: "${notification_email}";  
