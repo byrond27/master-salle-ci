@@ -11,7 +11,7 @@ public class ExampleResourceT {
 
     @Test
     public void testHelloEndpoint() {
-        given().when().get("/hello").then().statusCode(200).body(is("bye"));
+        given().when().get("/hello").then().statusCode(200).body(is("hello"));
     }
 
 }
