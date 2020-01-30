@@ -10,6 +10,7 @@ pipeline {
       }
       stage("Cleaning Package and Compile") {
          steps {
+            sh script:"mvn clean verify sonar:sonar"
             echo "Cleaning Package"
             sh script: "mvn clean package -DskipTests"
             echo "Compile the package"
@@ -44,7 +45,7 @@ pipeline {
             message "Pasamos a producción?"
         }
         steps {
-           echo "Production"
+            echo "Production"
             sh "docker stop maven_${old_version} || (exit 0)"
             sh "docker run --name maven_${new_version} -i --rm -p 8082:8080 -d quarkus/code-with-quarkus-jvm"
         }
