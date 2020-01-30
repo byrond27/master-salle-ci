@@ -18,7 +18,6 @@ pipeline {
       }
       stage ("Sonarqube"){
          steps {
-            sh "docker run -d --name sonarqube -p 9000:9000 sonarqube"
             sh script:"./mvnw sonar:sonar \
                   -Dsonar.projectKey=${project_key_sonarqube} \
                   -Dsonar.host.url=http://localhost:9000 \
