@@ -19,9 +19,9 @@ pipeline {
       stage ("Sonarqube"){
          steps {
             sh script:"./mvnw sonar:sonar \
-                  -Dsonar.projectKey=Jenkins-Java \
+                  -Dsonar.projectKey=${project_key_sonarqube} \
                   -Dsonar.host.url=http://localhost:9000 \
-                  -Dsonar.login=d41a669c82aacf62ab62c16255256bdb326b3596"
+                  -Dsonar.login=${login_sonaqube}"
          }
       }
       stage ("Tests") {
@@ -53,8 +53,8 @@ pipeline {
         }
         steps {
             echo "Production"
-            sh "docker stop maven_${old_version} || (exit 0)"
-            sh "docker run --name maven_${new_version} -i --rm -p 8082:8080 -d quarkus/code-with-quarkus-jvm"
+            sh "docker stop maven-${old_version} || (exit 0)"
+            sh "docker run --name maven-${new_version} -i --rm -p 8082:8080 -d quarkus/code-with-quarkus-jvm"
         }
      }
    }
