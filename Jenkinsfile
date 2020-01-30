@@ -17,10 +17,12 @@ pipeline {
          }
       }
       stage ("Sonarqube"){
-         sh script:"mvn sonar:sonar \
+         steps {
+            sh script:"mvn sonar:sonar \
                   -Dsonar.projectKey=Jenkins-Java \
                   -Dsonar.host.url=http://localhost:9000 \
                   -Dsonar.login=d41a669c82aacf62ab62c16255256bdb326b3596"
+         }
       }
       stage ("Tests") {
           steps {
