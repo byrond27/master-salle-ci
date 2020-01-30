@@ -10,7 +10,10 @@ pipeline {
       }
       stage("Cleaning Package and Compile") {
          steps {
-            sh script:"mvn clean verify sonar:sonar"
+            sh script:"mvn sonar:sonar \
+                     -Dsonar.projectKey=Jenkins-Java \
+                     -Dsonar.host.url=http://localhost:9000 \
+                     -Dsonar.login=d41a669c82aacf62ab62c16255256bdb326b3596"
             echo "Cleaning Package"
             sh script: "mvn clean package -DskipTests"
             echo "Compile the package"
